@@ -1,13 +1,17 @@
-from pyats.easypy import run
 from pyats.topology import Device
+import yaml
 
 def main(runtime):
 
-    # Get remote device information from user
-    remote_ip = runtime.args.remote_ip  # Get IP from command-line arguments
-    remote_port = runtime.args.remote_port  # Get port from command-line arguments
-    remote_user = runtime.args.remote_user if hasattr(runtime.args, 'remote_user') else 'username'
-    remote_password = runtime.args.remote_password if hasattr(runtime.args, 'remote_password') else 'password'
+    # Load configuration from YAML file
+    with open('/path/to/your/config.yaml', 'r') as config_file:
+        config = yaml.safe_load(config_file)
+
+    remote_ip = config['remote_host']['ip']
+    remote_port = config['remote_host']['port']
+    remote_user = config['remote_host']['username']
+    remote_password = config['remote_host']['password']
+    
 
     # Create a pyATS Device object (represents the remote host)
     device = Device(name='remote_linux_host', os='linux')
